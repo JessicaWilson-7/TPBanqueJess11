@@ -8,8 +8,8 @@
         
         <!-- Properties -->
         <properties>
-            <!-- Drop and create the database schema at each deployment -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!-- Create the database schema at deployment if not exists -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
             <!-- Enable EclipseLink SQL logging -->
             <property name="eclipselink.logging.level" value="FINE"/>
         </properties>

@@ -6,7 +6,7 @@ package com.company.tpbanquejess11.service;
 
 import com.company.tpbanquejess11.entity.CompteBancaire;
 import jakarta.annotation.sql.DataSourceDefinition;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -31,7 +31,7 @@ import java.util.List;
             "driverClass=com.mysql.cj.jdbc.Driver"
         }
 )
-@RequestScoped
+@ApplicationScoped
 public class GestionnaireCompte {
 
     @PersistenceContext(unitName = "banquePU")
@@ -46,4 +46,10 @@ public class GestionnaireCompte {
         TypedQuery<CompteBancaire> query = entityManager.createQuery("SELECT c FROM CompteBancaire c", CompteBancaire.class);
         return query.getResultList();
     }
+
+    public long nbComptes() {
+        TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(c) FROM CompteBancaire c", Long.class);
+        return query.getSingleResult();
+    }
+
 }
