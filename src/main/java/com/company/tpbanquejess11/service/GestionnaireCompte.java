@@ -51,5 +51,26 @@ public class GestionnaireCompte {
         TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(c) FROM CompteBancaire c", Long.class);
         return query.getSingleResult();
     }
+    
+    @Transactional
+    public void transferer(CompteBancaire source, CompteBancaire destination, int montant) {
+        if (source != null && destination != null) {
+            source.retirer(montant);
+            destination.deposer(montant);
+            update(source);
+            update(destination);
+        } else {
+            throw new IllegalArgumentException("Un des comptes n'existe pas.");
+        }
+    }
+
+    @Transactional
+    public CompteBancaire update(CompteBancaire compteBancaire) {
+        return entityManager.merge(compteBancaire);
+    }
+
+    public CompteBancaire findById(long idCompte) {
+        return entityManager.find(CompteBancaire.class, idCompte);
+    }
 
 }
