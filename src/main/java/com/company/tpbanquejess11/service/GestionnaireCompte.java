@@ -42,6 +42,11 @@ public class GestionnaireCompte {
         entityManager.persist(c);
     }
 
+    @Transactional
+    public void enregistrerCompte(CompteBancaire compte) {
+        entityManager.persist(compte);
+    }
+
     public List<CompteBancaire> getAllComptes() {
         TypedQuery<CompteBancaire> query = entityManager.createQuery("SELECT c FROM CompteBancaire c", CompteBancaire.class);
         return query.getResultList();
@@ -51,7 +56,7 @@ public class GestionnaireCompte {
         TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(c) FROM CompteBancaire c", Long.class);
         return query.getSingleResult();
     }
-    
+
     @Transactional
     public void transferer(CompteBancaire source, CompteBancaire destination, int montant) {
         if (source != null && destination != null) {
