@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package com.company.tpbanquejess11.jsf;
 
 import com.company.tpbanquejess11.entity.CompteBancaire;
+import com.company.tpbanquejess11.jsf.util.Util;
 import com.company.tpbanquejess11.service.GestionnaireCompte;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
@@ -56,10 +53,25 @@ public class TransfertBean {
     }
 
     public String transfererArgent() {
+        boolean erreur = false;
         CompteBancaire source = gestionnaireCompte.findById(idSource);
+        if (source == null) {
+            Util.addErrorMessage("Aucun compte avec cet id !");
+            erreur = true;
+        } else {
+            if (source.getSolde() < montant) {
+                Util.addErrorMessage("Solde insuffisant dans le compte source !");
+                erreur = true;
+            }
+        }
+
+        if (erreur) {
+            return null;
+        }
+
         CompteBancaire destination = gestionnaireCompte.findById(idDestination);
         gestionnaireCompte.transferer(source, destination, montant);
+        Util.addSuccessMessage("Transfert correctement effectué");
         return "listeComptes?faces-redirect=true";
     }
-
 }
