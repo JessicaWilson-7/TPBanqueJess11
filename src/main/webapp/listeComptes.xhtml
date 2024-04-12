@@ -8,28 +8,30 @@
                 template="/WEB-INF/templates/template_defaut.xhtml">
     <ui:define name="content">
         <h:form>
-            <p:dataTable value="#{listeComptes.allComptes}" var="compte"
-                         paginator="true" rows="10"
+            <p:dataTable id="dataTable" value="#{listeComptes.allComptes}" var="compte"
+                         styleClass="custom-table" paginator="true" rows="10"
                          emptyMessage="Aucun compte trouvé"
                          rowsPerPageTemplate="5,10,15"
-                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         >
 
-                <p:column headerText="ID">
+                <p:column headerText="ID" sortBy="#{compte.id}" styleClass="custom-table-header" width="40">
                     <h:outputText value="#{compte.id}"/>
                 </p:column>
 
-                <p:column headerText="Nom">
+                <p:column headerText="Nom" sortBy="#{compte.nom}" filterBy="#{compte.nom}" styleClass="custom-table-header" width="200">
                     <h:outputText value="#{compte.nom}"/>
                 </p:column>
 
-                <p:column headerText="Solde">
-                    <h:outputText value="#{compte.solde}"/>
+                <p:column headerText="Solde" sortBy="#{compte.solde}" filterFunction="#{listeComptes.columnFilter.filterBySolde}" styleClass="custom-table-header" width="60">
+                    <h:outputText value="#{compte.solde}">
+                        <f:convertNumber pattern="###,###,##0"/>
+                    </h:outputText>
                 </p:column>
 
             </p:dataTable>
-
             <h:messages/>
-
         </h:form>
     </ui:define>
+
 </ui:composition>
