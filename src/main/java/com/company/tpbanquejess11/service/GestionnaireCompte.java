@@ -78,4 +78,16 @@ public class GestionnaireCompte {
         return entityManager.find(CompteBancaire.class, idCompte);
     }
 
+    @Transactional
+    public void deposer(CompteBancaire compte, int montant) {
+        compte.deposer(montant);
+        update(compte);
+    }
+
+    @Transactional
+    public void retirer(CompteBancaire compte, int montant) {
+        compte.retirer(montant);
+        update(compte);
+    }
+
 }

@@ -16,18 +16,20 @@
                          >
 
                 <p:column headerText="ID" sortBy="#{compte.id}" styleClass="custom-table-header" width="40">
-                    <h:outputText value="#{compte.id}"/>
+                    <f:facet name="header">Id</f:facet>
+                    <h:link value="#{compte.id}" outcome="mouvement?id=#{compte.id}"/>
                 </p:column>
 
                 <p:column headerText="Nom" sortBy="#{compte.nom}" filterBy="#{compte.nom}" styleClass="custom-table-header" width="200">
                     <h:outputText value="#{compte.nom}"/>
                 </p:column>
 
-                <p:column headerText="Solde" sortBy="#{compte.solde}" filterFunction="#{listeComptes.columnFilter.filterBySolde}" styleClass="custom-table-header" width="60">
+                <p:column headerText="Solde" sortBy="#{compte.solde}" filterBy="#{compte.solde}" filterFunction="#{listeComptes.columnFilter.filterBySolde}" styleClass="custom-table-header" width="60">
                     <h:outputText value="#{compte.solde}">
                         <f:convertNumber pattern="###,###,##0"/>
                     </h:outputText>
                 </p:column>
+
 
             </p:dataTable>
             <h:messages globalOnly="true" style="color: green;" />

@@ -54,16 +54,15 @@ public class CompteBancaire implements Serializable {
         this.solde = solde;
     }
 
-    // Méthodes pour manipuler le solde
     public void deposer(int montant) {
-        solde += montant;
+        this.solde += montant;
     }
 
     public void retirer(int montant) {
-        if (montant < solde) {
-            solde -= montant;
+        if (this.solde >= montant) {
+            this.solde -= montant;
         } else {
-            solde = 0;
+            throw new IllegalArgumentException("Le solde du compte est insuffisant pour effectuer le retrait.");
         }
     }
 
