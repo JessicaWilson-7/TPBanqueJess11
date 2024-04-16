@@ -5,6 +5,7 @@
 package com.company.tpbanquejess11.jsf;
 
 import com.company.tpbanquejess11.entity.CompteBancaire;
+import com.company.tpbanquejess11.jsf.util.Util;
 import com.company.tpbanquejess11.service.GestionnaireCompte;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
@@ -22,7 +23,7 @@ import java.io.Serializable;
  */
 @Named(value = "mouvement")
 @ViewScoped
-public class Mouvement implements Serializable{
+public class Mouvement implements Serializable {
 
     private Long id;
     private CompteBancaire compte;
@@ -45,9 +46,8 @@ public class Mouvement implements Serializable{
     }
 
     public void loadCompte() {
-        if (id != null) {
-            compte = gestionnaireCompte.findById(id);
-        }
+        compte = gestionnaireCompte.findById(id);
+
     }
 
     public String getTypeMouvement() {
@@ -87,12 +87,8 @@ public class Mouvement implements Serializable{
             } else {
                 gestionnaireCompte.retirer(compte, montant);
             }
-        } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erreur lors de l'enregistrement du mouvement",
-                    "Veuillez sélectionner un compte et un type de mouvement");
-            FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
         return "listeComptes?faces-redirect=true";
     }
 }

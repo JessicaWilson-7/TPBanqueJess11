@@ -1,6 +1,7 @@
 package com.company.tpbanquejess11.jsf;
 
 import com.company.tpbanquejess11.entity.CompteBancaire;
+import com.company.tpbanquejess11.jsf.util.Util;
 import com.company.tpbanquejess11.service.GestionnaireCompte;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
@@ -12,20 +13,23 @@ import java.util.List;
 @ViewScoped
 public class ListeComptes implements Serializable {
 
+    private List<CompteBancaire> compteList;
+
     @Inject
     private GestionnaireCompte gestionnaireCompte;
 
-    @Inject
-    private ColumnFilter columnFilter;
 
-    public ListeComptes() {
-    }
 
     public List<CompteBancaire> getAllComptes() {
-        return gestionnaireCompte.getAllComptes();
+        if (compteList == null) {
+            compteList = gestionnaireCompte.getAllComptes();
+        }
+        return compteList;
     }
 
-    public ColumnFilter getColumnFilter() {
-        return columnFilter;
+    public String supprimerCompte(CompteBancaire compteBancaire) {
+        gestionnaireCompte.supprimerCompte(compteBancaire);
+        Util.addFlashInfoMessage("Compte de " + compteBancaire.getNom() + " supprimé");
+        return "listeComptes?faces-redirect=true";
     }
 }

@@ -54,13 +54,24 @@ public class TransfertBean {
 
     public String transfererArgent() {
         boolean erreur = false;
+
         CompteBancaire source = gestionnaireCompte.findById(idSource);
+        CompteBancaire destination = gestionnaireCompte.findById(idDestination);
+
         if (source == null) {
-            Util.addErrorMessage("Aucun compte avec cet id !");
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
             erreur = true;
         } else {
             if (source.getSolde() < montant) {
-                Util.addErrorMessage("Solde insuffisant dans le compte source !");
+                erreur = true;
+            }
+        }
+
+        if (destination == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destination");
+            erreur = true;
+        } else {
+            if (destination.getSolde() < montant) {
                 erreur = true;
             }
         }
@@ -69,9 +80,8 @@ public class TransfertBean {
             return null;
         }
 
-        CompteBancaire destination = gestionnaireCompte.findById(idDestination);
         gestionnaireCompte.transferer(source, destination, montant);
-        Util.addSuccessMessage("Transfert correctement effectué");
+        Util.addFlashInfoMessage("Transfert correctement effectué depuis " + source.getNom() + " à " + destination.getNom() + " pour le montant " + montant);
         return "listeComptes?faces-redirect=true";
     }
 }

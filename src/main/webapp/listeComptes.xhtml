@@ -8,26 +8,34 @@
                 template="/WEB-INF/templates/template_defaut.xhtml">
     <ui:define name="content">
         <h:form>
-            <p:dataTable id="dataTable" value="#{listeComptes.allComptes}" var="compte"
-                         styleClass="custom-table" paginator="true" rows="10"
+            <p:dataTable id="dataTable" value="#{listeComptes.allComptes}" var="item"
+                         styleClass="width:auto"
+                         paginator="true"
+                         rows="10"
                          emptyMessage="Aucun compte trouvé"
                          rowsPerPageTemplate="5,10,15"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          >
 
-                <p:column headerText="ID" sortBy="#{compte.id}" styleClass="custom-table-header" width="40">
+                <p:column headerText="ID" sortBy="#{item.id}" styleClass="custom-table-header" width="40">
                     <f:facet name="header">Id</f:facet>
-                    <h:link value="#{compte.id}" outcome="mouvement?id=#{compte.id}"/>
+                    <h:link value="#{item.id}" outcome="mouvement?id=#{item.id}"/>
                 </p:column>
 
-                <p:column headerText="Nom" sortBy="#{compte.nom}" filterBy="#{compte.nom}" styleClass="custom-table-header" width="200">
-                    <h:outputText value="#{compte.nom}"/>
+                <p:column headerText="Nom" sortBy="#{item.nom}" filterBy="#{item.nom}"  width="200">
+                    <h:outputText value="#{item.nom}"/>
                 </p:column>
 
-                <p:column headerText="Solde" sortBy="#{compte.solde}" filterBy="#{compte.solde}" filterFunction="#{listeComptes.columnFilter.filterBySolde}" styleClass="custom-table-header" width="60">
-                    <h:outputText value="#{compte.solde}">
+                <p:column headerText="Solde" sortBy="#{item.solde}" filterBy="#{item.solde}" filterFunction="#{columnFilter.filterBySolde}" style="text-align:right;" width="60">
+                    <h:outputText value="#{item.solde}">
                         <f:convertNumber pattern="###,###,##0"/>
                     </h:outputText>
+                </p:column>
+                <p:column headerText="Actions" width="100">
+                    <h:commandLink action="#{listeComptes.supprimerCompte(item)}"
+                                   title="Supprimer le compte">
+                        <p:graphicImage name="images/del.png" width="24" height="24" />
+                    </h:commandLink>
                 </p:column>
 
 

@@ -22,9 +22,10 @@ public class ColumnFilter {
         }
 
         try {
-            Double soldeDouble = (Double) solde;
-            Double filterValueDouble = Double.valueOf((String) filterValue);
-            return soldeDouble >= filterValueDouble;
+            Integer soldeInt = (Integer) solde;
+            Integer filterValueInt = Integer.valueOf((String) filterValue);
+
+            return soldeInt >= filterValueInt;
         } catch (NumberFormatException e) {
             return false;
         }

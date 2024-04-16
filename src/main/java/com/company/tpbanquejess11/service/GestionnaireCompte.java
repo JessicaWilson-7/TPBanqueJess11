@@ -90,4 +90,9 @@ public class GestionnaireCompte {
         update(compte);
     }
 
+    @Transactional
+    public void supprimerCompte(CompteBancaire compte) {
+        entityManager.remove(entityManager.merge(compte));
+    }
+
 }

@@ -20,7 +20,7 @@ import jakarta.inject.Inject;
 public class AjoutCompteBean {
 
     private String nom;
-    private int solde; 
+    private int solde;
 
     @Inject
     private GestionnaireCompte gestionnaireCompte;
@@ -33,12 +33,12 @@ public class AjoutCompteBean {
 
     public String creerCompte() {
         if (nom == null || nom.isEmpty()) {
-            Util.addErrorMessage("Veuillez saisir un nom de titulaire valide.");
+            Util.messageErreur("Veuillez saisir un nom de titulaire valide.");
             return null;
         }
 
         if (solde < 0) {
-            Util.addErrorMessage("Le solde ne peut pas être négatif.");
+            Util.messageErreur("Le solde ne peut pas être négatif.");
             return null;
         }
 
@@ -48,12 +48,11 @@ public class AjoutCompteBean {
 
         gestionnaireCompte.enregistrerCompte(nouveauCompte);
 
-        Util.addSuccessMessage("Le compte a été créé avec succès.");
+        Util.addFlashInfoMessage("Compte de " + nouveauCompte.getNom() + " créé avec succès");
 
         return "listeComptes?faces-redirect=true";
     }
 
-    
     public String getNom() {
         return nom;
     }
