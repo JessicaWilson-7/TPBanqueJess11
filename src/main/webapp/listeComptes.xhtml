@@ -31,11 +31,15 @@
                         <f:convertNumber pattern="###,###,##0"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Actions" width="100">
+                <p:column headerText="Supprimer" width="100">
                     <h:commandLink action="#{listeComptes.supprimerCompte(item)}"
                                    title="Supprimer le compte">
                         <p:graphicImage name="images/del.png" width="24" height="24" />
                     </h:commandLink>
+                </p:column>
+                <p:column headerText="Modifier" width="100">
+                    <h:link outcome="renommer?id=#{item.id}" 
+                            value="Renommer"/>
                 </p:column>
 
 
