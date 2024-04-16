@@ -12,6 +12,9 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
 import jakarta.transaction.Transactional;
+import java.util.List;
+
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,16 +23,22 @@ import jakarta.transaction.Transactional;
 @ApplicationScoped
 public class Init {
 
+    private final static Logger logger = Logger.getLogger("com.company.tpbanquejess11.config.Init");
+
     @Inject
     private GestionnaireCompte gestionnaireCompte;
 
     @Transactional
     public void init(@Observes @Initialized(ApplicationScoped.class) ServletContext context) {
-        if (gestionnaireCompte.nbComptes() == 0) {
+        List<CompteBancaire> comptes = gestionnaireCompte.getAllComptes();
+        if (comptes.isEmpty()) {
+            logger.warning("Aucun compte dans la base de données. Création de comptes");
             gestionnaireCompte.creerCompte(new CompteBancaire("John Lennon", 150000));
             gestionnaireCompte.creerCompte(new CompteBancaire("Paul McCartney", 950000));
             gestionnaireCompte.creerCompte(new CompteBancaire("Ringo Starr", 20000));
-            gestionnaireCompte.creerCompte(new CompteBancaire("George Harrison", 100000));
+            gestionnaireCompte.creerCompte(new CompteBancaire("Georges Harrisson", 100000));
+        }else{
+            logger.info("La base de données n'est pas vide");
         }
     }
 }
