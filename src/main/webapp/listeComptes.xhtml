@@ -38,10 +38,10 @@
                     </h:commandLink>
                 </p:column>
                 <p:column headerText="Modifier" width="100">
-                    <h:link outcome="renommer?id=#{item.id}" 
-                            value="Renommer"/>
+                    <h:link outcome="renommer?id=#{item.id}">
+                        <p:graphicImage name="images/edit.png" width="24" height="24" alt="Renommer" />
+                    </h:link>
                 </p:column>
-
 
             </p:dataTable>
             <h:messages globalOnly="true" style="color: green;" />
