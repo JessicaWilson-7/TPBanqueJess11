@@ -8,7 +8,6 @@ import com.company.tpbanquejess11.entity.CompteBancaire;
 import com.company.tpbanquejess11.jsf.util.Util;
 import com.company.tpbanquejess11.service.GestionnaireCompte;
 import jakarta.inject.Named;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIInput;
 import jakarta.faces.context.FacesContext;
@@ -67,26 +66,30 @@ public class Mouvement implements Serializable {
     }
 
     public void validateSolde(FacesContext fc, UIInput composant, Object valeur) {
-        if (typeMouvement == null || compte == null) {
+        UIInput composantTypeMouvement = (UIInput) composant.findComponent("typeMouvement");
+        
+        String valeurTypeMouvement = (String) composantTypeMouvement.getLocalValue();
+        if (valeurTypeMouvement == null) {
+
             return;
         }
-        int montantLocal = (int) valeur;
-        if (typeMouvement.equals("retrait") && compte.getSolde() < montantLocal) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Le retrait doit être inférieur au solde du compte",
-                    "Le retrait doit être inférieur au solde du compte");
-            throw new ValidatorException(message);
+        if (valeurTypeMouvement.equals("retrait")) {
+            int retrait = (int) valeur;
+            if (compte.getSolde() < retrait) {
+                FacesMessage message
+                        = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                "Le retrait doit être inférieur au solde du compte",
+                                "Le retrait doit être inférieur au solde du compte");
+                throw new ValidatorException(message);
+            }
         }
     }
 
     public String enregistrerMouvement() {
-        if (compte != null && typeMouvement != null) {
-
-            if (typeMouvement.equals("ajout")) {
-                gestionnaireCompte.deposer(compte, montant);
-            } else {
-                gestionnaireCompte.retirer(compte, montant);
-            }
+        if (typeMouvement.equals("ajout")) {
+            gestionnaireCompte.deposer(compte, montant);
+        } else {
+            gestionnaireCompte.retirer(compte, montant);
         }
         Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
         return "listeComptes?faces-redirect=true";

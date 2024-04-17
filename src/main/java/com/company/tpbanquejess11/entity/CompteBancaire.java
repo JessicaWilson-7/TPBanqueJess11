@@ -55,14 +55,14 @@ public class CompteBancaire implements Serializable {
     }
 
     public void deposer(int montant) {
-        this.solde += montant;
+        solde += montant;
     }
 
     public void retirer(int montant) {
-        if (this.solde >= montant) {
-            this.solde -= montant;
+        if (montant < solde) {
+            solde -= montant;
         } else {
-            throw new IllegalArgumentException("Le solde du compte est insuffisant pour effectuer le retrait.");
+            solde = 0;
         }
     }
 
@@ -79,14 +79,15 @@ public class CompteBancaire implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof CompteBancaire)) {
             return false;
         }
         CompteBancaire other = (CompteBancaire) object;
-        return id != null && id.equals(other.id);
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
