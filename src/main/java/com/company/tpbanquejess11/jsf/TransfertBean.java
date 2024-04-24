@@ -63,6 +63,7 @@ public class TransfertBean {
             erreur = true;
         } else {
             if (source.getSolde() < montant) {
+                Util.messageErreur("Solde insuffisant", "Solde insuffisant", "form:source");
                 erreur = true;
             }
         }
