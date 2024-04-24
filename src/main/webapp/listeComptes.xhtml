@@ -7,6 +7,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/template_defaut.xhtml">
     <ui:define name="content">
+        <h:messages id="flashMessages" globalOnly="true" />
+
         <h:form>
             <p:dataTable id="dataTable" value="#{listeComptes.allComptes}" var="item"
                          styleClass="width:auto"
@@ -44,7 +46,6 @@
                 </p:column>
 
             </p:dataTable>
-            <h:messages globalOnly="true" style="color: green;" />
         </h:form>
     </ui:define>
 

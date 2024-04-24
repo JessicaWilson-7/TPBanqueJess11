@@ -37,26 +37,11 @@ public class GestionnaireCompte {
     @PersistenceContext(unitName = "banquePU")
     private EntityManager entityManager;
 
-    @Transactional
-    public void creerCompte(CompteBancaire c) {
-        entityManager.persist(c);
-    }
-
-    @Transactional
-    public void enregistrerCompte(CompteBancaire compte) {
-        entityManager.persist(compte);
-    }
-
-    public List<CompteBancaire> getAllComptes() {
-        TypedQuery<CompteBancaire> query = entityManager.createQuery("SELECT c FROM CompteBancaire c", CompteBancaire.class);
-        return query.getResultList();
-    }
-
-    public long nbComptes() {
-        TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(c) FROM CompteBancaire c", Long.class);
-        return query.getSingleResult();
-    }
-
+    /*  @Transactional
+   * public void creerCompte(CompteBancaire c) {
+    *    entityManager.persist(c);
+    *}
+     */
     @Transactional
     public void transferer(CompteBancaire source, CompteBancaire destination, int montant) {
         if (source != null && destination != null) {
@@ -74,8 +59,23 @@ public class GestionnaireCompte {
         return entityManager.merge(compteBancaire);
     }
 
+    @Transactional
+    public void enregistrerCompte(CompteBancaire compte) {
+        entityManager.persist(compte);
+    }
+
     public CompteBancaire findById(long idCompte) {
         return entityManager.find(CompteBancaire.class, idCompte);
+    }
+
+    public List<CompteBancaire> getAllComptes() {
+        TypedQuery<CompteBancaire> query = entityManager.createQuery("SELECT c FROM CompteBancaire c", CompteBancaire.class);
+        return query.getResultList();
+    }
+
+    public long nbComptes() {
+        TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(c) FROM CompteBancaire c", Long.class);
+        return query.getSingleResult();
     }
 
     @Transactional

@@ -33,10 +33,10 @@ public class Init {
         List<CompteBancaire> comptes = gestionnaireCompte.getAllComptes();
         if (comptes.isEmpty()) {
             logger.warning("Aucun compte dans la base de données. Création de comptes");
-            gestionnaireCompte.creerCompte(new CompteBancaire("John Lennon", 150000));
-            gestionnaireCompte.creerCompte(new CompteBancaire("Paul McCartney", 950000));
-            gestionnaireCompte.creerCompte(new CompteBancaire("Ringo Starr", 20000));
-            gestionnaireCompte.creerCompte(new CompteBancaire("Georges Harrisson", 100000));
+            gestionnaireCompte.enregistrerCompte(new CompteBancaire("John Lennon", 150000));
+            gestionnaireCompte.enregistrerCompte(new CompteBancaire("Paul McCartney", 950000));
+            gestionnaireCompte.enregistrerCompte(new CompteBancaire("Ringo Starr", 20000));
+            gestionnaireCompte.enregistrerCompte(new CompteBancaire("Georges Harrisson", 100000));
         }else{
             logger.info("La base de données n'est pas vide");
         }
