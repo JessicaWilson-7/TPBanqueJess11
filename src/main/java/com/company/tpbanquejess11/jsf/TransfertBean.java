@@ -15,18 +15,12 @@ import jakarta.inject.Inject;
 @RequestScoped
 public class TransfertBean {
 
-    private Long idSource;
-    private Long idDestination;
-    private Integer montant;
+    Long idSource;
+    Long idDestination;
+    Integer montant;
 
     @Inject
     private GestionnaireCompte gestionnaireCompte;
-
-    /**
-     * Creates a new instance of TransfertBean
-     */
-    public TransfertBean() {
-    }
 
     public Long getIdSource() {
         return idSource;
@@ -71,10 +65,6 @@ public class TransfertBean {
         if (destination == null) {
             Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destination");
             erreur = true;
-        } else {
-            if (destination.getSolde() < montant) {
-                erreur = true;
-            }
         }
 
         if (erreur) {

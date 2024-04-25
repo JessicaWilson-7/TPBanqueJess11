@@ -16,6 +16,7 @@
             <ui:define name="content">
                 <h:form id="transfertForm">
                     <h:panelGrid columns="3">
+
                         <h:outputLabel for="idSource" value="ID Compte Source:" />
                         <h:inputText id="idSource" value="#{transfertBean.idSource}" 
                                      required="true" 
@@ -41,7 +42,10 @@
                         <h:message for="montant" />
 
                         <h:commandButton value="Transférer" action="#{transfertBean.transfererArgent}" />
+
                     </h:panelGrid>
+                    <h:messages/>
+
                 </h:form>
             </ui:define>
 
