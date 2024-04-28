@@ -48,5 +48,4 @@ public class CompteConverter implements Converter<CompteBancaire> {
         }
         return compte.getId().toString();
     }
-
 }
