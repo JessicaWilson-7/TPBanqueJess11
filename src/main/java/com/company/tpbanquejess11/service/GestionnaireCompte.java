@@ -69,8 +69,9 @@ public class GestionnaireCompte {
     }
 
     public List<CompteBancaire> getAllComptes() {
+        String s = "select c from CompteBancaire as c join fetch c.operations";
         TypedQuery<CompteBancaire> query
-                = entityManager.createQuery("SELECT c FROM CompteBancaire c join fetch c.operations", CompteBancaire.class);
+                = entityManager.createQuery(s, CompteBancaire.class);
         return query.getResultList();
     }
 
