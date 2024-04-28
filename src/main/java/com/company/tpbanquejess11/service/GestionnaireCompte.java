@@ -69,7 +69,7 @@ public class GestionnaireCompte {
     }
 
     public List<CompteBancaire> getAllComptes() {
-        String s = "select c from CompteBancaire as c join fetch c.operations";
+        String s = "select distinct(c) from CompteBancaire as c left join fetch c.operations";
         TypedQuery<CompteBancaire> query
                 = entityManager.createQuery(s, CompteBancaire.class);
         return query.getResultList();
